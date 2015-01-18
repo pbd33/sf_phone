@@ -12,7 +12,6 @@ import org.apache.http.util.EntityUtils;
 import com.alibaba.fastjson.JSON;
 import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.MapView;
-import com.esri.core.geometry.Envelope;
 import com.esri.core.geometry.Point;
 import com.esri.core.map.Graphic;
 import com.esri.core.symbol.PictureMarkerSymbol;
@@ -180,7 +179,7 @@ public class MainActivity extends Activity {
 	// 从服务端获取数据并且将接收到的用户信息和车辆信息显示在地图上面
 	public void markOnMap(final GraphicsLayer gLayer,
 			final GraphicsLayer zdLayer, final PictureMarkerSymbol personPms,
-			PictureMarkerSymbol zdPms, final Location location) {
+			PictureMarkerSymbol zdPms, final Location location,final boolean flag) {
 		List<BasicNameValuePair> param = new ArrayList<BasicNameValuePair>();
 		param.add(new BasicNameValuePair(Constant.PARAMETER, location
 				.getLongitude() + ""));
@@ -235,7 +234,8 @@ public class MainActivity extends Activity {
 					Graphic g = new Graphic(p, personPms);
 					gLayer.clear();
 					gLayer.addGraphic(g);
-					map.centerAt(p);
+					if(!flag)
+						map.centerAt(p);
 					double t_x = 0;
 					try {
 						t_x = Double.parseDouble(result.get("value").get(
@@ -388,11 +388,11 @@ public class MainActivity extends Activity {
 			lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		// 首先检测 通过network 能否获得location对象
 		if (startLocation(GpsProvider,flag)) {
-			updateLocation(location);
+			updateLocation(location,flag);
 		} else
 		// 通过gps 能否获得location对象
 		if (startLocation(networkProvider,flag)) {
-			updateLocation(location);
+			updateLocation(location,flag);
 		} else {
 			// 如果上面两种方法都不能获得location对象 则显示下列信息
 			showMessage("没有打开GPS设备");
@@ -407,7 +407,7 @@ public class MainActivity extends Activity {
 	 * @param mContext
 	 * @return
 	 */
-	private boolean startLocation(String provider,boolean flag) {
+	private boolean startLocation(String provider,final boolean flag) {
 		Location location = lm.getLastKnownLocation(provider);
 
 		// 位置监听器
@@ -416,8 +416,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onLocationChanged(Location location) {
 				if (moning) {
-					Log.e(TAG, "正在更新位置信息。。。");
-					updateLocation(location);
+					Log.i(TAG, "正在更新位置信息。。。");
+					updateLocation(location,flag);
 				}
 
 			}
@@ -457,9 +457,9 @@ public class MainActivity extends Activity {
 	}
 
 	// 更新位置信息 展示到tv中
-	private void updateLocation(Location location) {
+	private void updateLocation(Location location,boolean flag) {
 		if (location != null) {
-			markOnMap(personLayer, zdLayer, locationSymbol, zdSymbol, location);
+			markOnMap(personLayer, zdLayer, locationSymbol, zdSymbol, location,flag);
 		} else {
 			System.out.println("没有获取到定位对象Location");
 		}
