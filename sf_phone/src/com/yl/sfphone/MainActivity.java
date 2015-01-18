@@ -82,7 +82,9 @@ public class MainActivity extends Activity {
 	private LocationListener locationListener;
 	private OnClickListener clickListener;
 
-	// 提示信息
+	/**
+	 * 提示信息
+	 * */ 
 	private void showMessage(String msg) {
 		mSg = msg;
 		mHandler.post(new Runnable() {
@@ -176,7 +178,9 @@ public class MainActivity extends Activity {
 		return map.retainState();
 	}
 
-	// 从服务端获取数据并且将接收到的用户信息和车辆信息显示在地图上面
+	/**
+	 * 从服务端获取数据并且将接收到的用户信息和车辆信息显示在地图上面
+	 * */ 
 	public void markOnMap(final GraphicsLayer gLayer,
 			final GraphicsLayer zdLayer, final PictureMarkerSymbol personPms,
 			PictureMarkerSymbol zdPms, final Location location,final boolean flag) {
@@ -234,8 +238,10 @@ public class MainActivity extends Activity {
 					Graphic g = new Graphic(p, personPms);
 					gLayer.clear();
 					gLayer.addGraphic(g);
-					if(!flag)
+					if(!flag){
 						map.centerAt(p);
+					}
+						
 					double t_x = 0;
 					try {
 						t_x = Double.parseDouble(result.get("value").get(
@@ -304,20 +310,26 @@ public class MainActivity extends Activity {
 		})).start();
 	}
 
-	// 震动
+	/**
+	 *  震动
+	 * */
 	public void startShake() {
 		mVibrator = (Vibrator) getApplication().getSystemService(
 				Service.VIBRATOR_SERVICE);
 		mVibrator.vibrate(Constant.VIBRATE, 0);
 	}
 
-	// 停止震动
+	/**
+	 *停止震动 
+	 * */ 
 	public void stopShake() {
 		if (mVibrator != null)
 			mVibrator.cancel();
 	}
 
-	// 响铃，如果使用静音模式将无法响铃
+	/**
+	 *  响铃，如果使用静音模式将无法响铃
+	 * */
 	public void playSound() {
 		Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
 		try {
@@ -334,7 +346,9 @@ public class MainActivity extends Activity {
 
 	}
 
-	// 停止响铃
+	/**
+	 * 停止响铃
+	 * */ 
 	public void stopPlaySound() {
 		if (mgr != null) {
 			mgr.pause();
@@ -354,8 +368,8 @@ public class MainActivity extends Activity {
 			// 设置对话框消息
 			isExit.setMessage("确定要退出吗？");
 			// 添加选择按钮并注册监听
-			isExit.setButton("确定", listener);
-			isExit.setButton2("取消", listener);
+			isExit.setButton("确定",(DialogInterface.OnClickListener)clickListener );
+			isExit.setButton2("取消", (DialogInterface.OnClickListener)clickListener);
 			// 显示对话框
 			isExit.show();
 		}
@@ -364,24 +378,9 @@ public class MainActivity extends Activity {
 
 	}
 
-	/** 监听对话框里面的button点击事件 */
-	DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int which) {
-			switch (which) {
-			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-				stopPlaySound();
-				stopShake();
-				finish();
-				break;
-			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
-				break;
-			default:
-				break;
-			}
-		}
-	};
-
-	// 获取location对象
+	/**
+	 *  获取location对象
+	 * */
 	private void initLocation(boolean flag) {
 		// 获得系统及服务的 LocationManager 对象 这个代码就这么写 不用考虑
 		if (lm == null)
@@ -405,6 +404,7 @@ public class MainActivity extends Activity {
 	 * 
 	 * @param provider
 	 * @param mContext
+	 * @param flag 
 	 * @return
 	 */
 	private boolean startLocation(String provider,final boolean flag) {
@@ -456,7 +456,9 @@ public class MainActivity extends Activity {
 
 	}
 
-	// 更新位置信息 展示到tv中
+	/**
+	 * 更新位置信息 
+	 * */ 
 	private void updateLocation(Location location,boolean flag) {
 		if (location != null) {
 			markOnMap(personLayer, zdLayer, locationSymbol, zdSymbol, location,flag);
@@ -474,7 +476,11 @@ public class MainActivity extends Activity {
 		super.onDestroy();
 	}
 
-	class ClickListener implements OnClickListener, OnCheckedChangeListener {
+	/**
+	 * 事件处理
+	 * 
+	 * */
+	class ClickListener implements OnClickListener, OnCheckedChangeListener,DialogInterface.OnClickListener {
 		@Override
 		public void onClick(View v) {
 			int id = v.getId();
@@ -536,6 +542,25 @@ public class MainActivity extends Activity {
 			default:
 				break;
 			}
+		}
+
+		@Override
+		public void onClick(DialogInterface arg0, int which) {
+			switch (which) {
+			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+				stopPlaySound();
+				stopShake();
+				if(lm!=null){
+					lm.removeUpdates(locationListener);
+				}
+				finish();
+				break;
+			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+				break;
+			default:
+				break;
+			}
+			
 		}
 	}
 }
