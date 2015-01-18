@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+   android:layout_height="fill_parent"
+    >
+<com.esri.android.map.MapView 
+     android:id="@+id/map"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     initExtent="1.840143345682222E7 3387776.6804067073 1.8421721842934374E7 3399322.373820019">
+  <com.esri.android.map.ags.ArcGISTiledMapServiceLayer 
+     url="http://222.211.85.254:8080/map_canch/tileServer/cd_map_a"/>
+      
+</com.esri.android.map.MapView>
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingRight="10dp"
+    android:paddingTop="30dp"
+    android:gravity="right"
+    >
+  <!-- 复位按钮 -->
+  	<ImageButton android:id="@+id/fw"
+  	    android:contentDescription="@drawable/location"
+  	    android:src="@drawable/location"
+  	    android:layout_width="64dp"
+  	    android:layout_height="64dp"
+  	    />
+  	<!-- 定位按钮 -->
+    <ImageButton android:id="@+id/dw"
+    android:contentDescription="@drawable/location"
+    android:src="@drawable/location"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginTop="10dp"
+   />
+	<!-- 注册 -->
+	<ImageButton android:id="@+id/reg"
+    android:contentDescription="@drawable/location"
+    android:src="@drawable/location"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:visibility="gone"
+    android:layout_marginTop="10dp"
+   />
+	<!-- 告警 -->
+	<ImageButton android:id="@+id/alarm"
+	    android:contentDescription="@drawable/location"
+	    android:src="@drawable/location"
+	    android:layout_marginTop="10dp"
+	    android:layout_width="64dp"
+	    android:layout_height="64dp"/>
+	<!-- 取消告警 -->
+	<ImageButton android:id="@+id/cancle"
+	    android:contentDescription="@drawable/location"
+	    android:src="@drawable/location"
+	    android:layout_marginTop="10dp"
+	    android:layout_width="64dp"
+	    android:layout_height="64dp"/>
+	<!-- 实时数据发送与接收开关 -->
+	<ToggleButton android:id="@+id/mon"
+	    android:text="@string/starting"
+	    android:layout_marginTop="10dp"
+	    android:layout_width="64dp"
+	    android:layout_height="64dp"
+	    android:checked="true"
+	    android:textOff="关"  
+        android:textOn="开"/>
+</LinearLayout>
+
+
+
+</AbsoluteLayout>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
+	<classpathentry exported="true" kind="var" path="ARCGIS_FOR_ANDROID/ArcGIS_Android.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:file:/D:/android adt/adt-bundle-windows-x86-20131030/eclipse/plugins/com.esri.arcgis.android.doc_0.9.0.201102041513/doc.zip!/api"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="var" path="ARCGIS_FOR_ANDROID/ArcGIS_PE.jar"/>
+	<classpathentry exported="true" kind="var" path="ARCGIS_FOR_ANDROID/ArcGIS_SG.jar"/>
+	<classpathentry exported="true" kind="var" path="ARCGIS_FOR_ANDROID/jackson-core-lgpl-1.6.3.jar"/>
+	<classpathentry exported="true" kind="var" path="ARCGIS_FOR_ANDROID/jackson-mapper-lgpl-1.6.3.jar"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
+	<classpathentry exported="true" kind="lib" path="lib/fastjson-1.0.2.jar"/>
+	<classpathentry kind="output" path="bin/classes"/>
+</classpath>
